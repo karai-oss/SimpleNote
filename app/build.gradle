@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
 }
-
+def versions = {
+      room_version  "2.6.1"
+}
 android {
     namespace 'com.github.simplenotice'
     compileSdk 34
@@ -13,8 +15,9 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders["app_name"] = "简记"
     }
 
@@ -24,10 +27,28 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors {
+
+    }
+
+
+
+    android.applicationVariants.configureEach {
+        var buildType = it.buildType
+        var flavor = it.flavorName
+        it.outputs.forEach {
+            print it.name
+        }
+    }
+
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+
+
 }
 
 dependencies {
@@ -40,8 +61,14 @@ dependencies {
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
 
+    // XXPermissions 动态权限框架
     implementation("com.github.getActivity:XXPermissions:18.63")
 
+    // room
+    implementation("androidx.room:room-runtime:${versions.properties.get("room_version")}")
+    annotationProcessor("androidx.room:room-compiler:${versions.properties.get("room_version")}")
+
+    // android eventbus
     implementation("org.greenrobot:eventbus:3.3.1")
 
 }
