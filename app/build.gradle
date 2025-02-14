@@ -26,7 +26,7 @@ android {
         }
     }
 
-    flavorDimensions  "simpleNotice"
+    flavorDimensions "simpleNotice"
     productFlavors {
 
         alls {
@@ -35,21 +35,21 @@ android {
     }
 
 
-    android.applicationVariants.all {variant->
+    android.applicationVariants.all { variant ->
         variant.outputs.all { ->
-            variant.productFlavors.forEach { flavor->
+            variant.productFlavors.forEach { flavor ->
 
                 def applicationName = defaultConfig.manifestPlaceholders.get("app_name_en")
                 def variantName = variant.name
                 def type = variant.buildType.name
-
                 def version_code = variant.versionCode
                 def version_name = variant.versionName
+
+                // 输出文件
                 outputFileName = "${applicationName}_${variantName}_${type}_${version_code}_${version_name}.apk"
             }
 
         }
-
 
 
     }
@@ -64,7 +64,7 @@ android {
 }
 
 dependencies {
-    def  room_version = "2.6.1"
+    def room_version = "2.6.1"
 
     implementation libs.appcompat
     implementation libs.material
